@@ -1,0 +1,15 @@
+{
+  "name": "ts-drag-drop",
+  "version": "1.0.0",
+  "description": "A simple drag and drop project built with just TS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server"
+  },
+  "author": "Manan Sharma",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
