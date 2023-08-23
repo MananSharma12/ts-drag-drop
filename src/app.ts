@@ -1,12 +1,15 @@
 // Drag & Drop Interfaces
 interface Draggable {
     dragStartHandler(event: DragEvent): void;
+
     dragEndHandler(event: DragEvent): void;
 }
 
 interface DragTarget {
     dragOverHandler(event: DragEvent): void;
+
     dropHandler(event: DragEvent): void;
+
     dragLeaveHandler(event: DragEvent): void;
 }
 
@@ -23,7 +26,8 @@ class Project {
         public description: string,
         public people: number,
         public status: ProjectStatus
-    ) {}
+    ) {
+    }
 
 }
 
@@ -68,14 +72,14 @@ class ProjectState extends State<Project> {
 
     moveProject(projectId: string, newStatus: ProjectStatus) {
         const project = this.projects.find(prj => prj.id === projectId)
-        if(project && project.status !== newStatus) {
+        if (project && project.status !== newStatus) {
             project.status = newStatus;
             this.updateListeners();
         }
     }
 
     private updateListeners() {
-        for(const listenerFn  of this.listeners) {
+        for (const listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
         }
     }
@@ -146,10 +150,11 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
     }
 
     private attach(insertAtBeginning: boolean) {
-        this.hostElement.insertAdjacentElement(insertAtBeginning ? 'afterbegin': 'beforeend', this.element);
+        this.hostElement.insertAdjacentElement(insertAtBeginning ? 'afterbegin' : 'beforeend', this.element);
     }
 
     abstract configure(): void;
+
     abstract renderContent(): void;
 }
 
@@ -157,7 +162,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
     private project: Project;
 
-    get persons () {
+    get persons() {
         return this.project.people === 1 ? '1 person' : `${this.project.people} people`;
     }
 
@@ -204,7 +209,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
 
     @autobind
     dragOverHandler(event: DragEvent) {
-        if(event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+        if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
             event.preventDefault();
             const listEl = this.element.querySelector('ul')!;
             listEl.classList.add('droppable');
@@ -252,7 +257,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
     }
 }
 
-class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     titleInputElement: HTMLInputElement;
     descriptionInputElement: HTMLInputElement;
     peopleInputElement: HTMLInputElement;
@@ -270,7 +275,8 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
         this.element.addEventListener('submit', this.submitHandler);
     }
 
-    renderContent() {}
+    renderContent() {
+    }
 
     private gatherUserInput(): [string, string, number] | void {
         const enteredTitle = this.titleInputElement.value;
